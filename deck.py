@@ -21,9 +21,6 @@ class Deck:
     def deal_card(self):
         return self.cards.pop()
 
-    # Not sure if this is working yet the way I intended
-    # More testing to make sure its playing nicely with
-    # add_multiple_cards function
     def deal_multiple_cards(self, num_cards_dealt):
         new = []
         for i in range(num_cards_dealt):
@@ -39,7 +36,7 @@ class Deck:
 
     def populate_standard_52(self):
         suits = ["Hearts", "Spades", "Diamonds", "Clubs"]
-        faces = ["Ace", 2, 3, 4, 5, 6, 7, 8, 9, "Jack", "Queen", "King"]
+        faces = ["Ace", 2, 3, 4, 5, 6, 7, 8, 9, 10, "Jack", "Queen", "King"]
         for suit in suits:
             for face in faces:
                 try:
@@ -48,8 +45,12 @@ class Deck:
                         face = str(value)
                     elif face == "Ace":
                         value = 1
-                    elif face in ["Jack", "Queen", "King"]:
-                        value = 10
+                    elif face == "Jack":
+                        value = 11
+                    elif face == "Queen":
+                        value = 12
+                    elif face == "King":
+                        value = 13
                     else:
                         raise ValueError(f"Invalid face card: {face}")
                 except ValueError as e:
@@ -57,11 +58,3 @@ class Deck:
                 else:
                     card = Card(face, suit, value)
                     self.add_card(card)
-                    
-# For Debugging will remove
-deck = Deck()
-deck.populate_standard_52()
-deck.shuffle_deck()
-new = Deck()
-new.add_multiple_cards(deck.deal_multiple_cards(26))
-new.show_cards()
